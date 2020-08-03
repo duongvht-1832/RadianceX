@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_learn"
+        android:id="@+id/navigation_learn"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_view_list_24"
         android:title="@string/learn"
         app:showAsAction="withText" />
     <item
-        android:id="@+id/action_note"
+        android:id="@+id/navigation_note"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_note_24"
         android:title="@string/note"
         app:showAsAction="withText" />
 
     <item
-        android:id="@+id/action_account"
+        android:id="@+id/navigation_account"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="@string/account"

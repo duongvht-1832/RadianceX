@@ -7,11 +7,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.Navigation
+import androidx.navigation.ui.setupWithNavController
 import com.example.android.radiancex.databinding.ActivityMainBinding
-import com.example.android.radiancex.screen.account.AccountFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,15 +23,15 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setHomeButtonEnabled(true);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
         binding.let {
+            binding.bottomNavigation.setupWithNavController(Navigation.findNavController(this, R.id.nav_host_fragment))
             it.actionAddEntry.setOnClickListener { v: View? ->
                 val intent = Intent(this, AddNewEntryActivity::class.java)
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
             }
             it.actionNewQuestion.setOnClickListener { v: View? -> Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show() }
-            it.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-            loadFragment(DictionaryFragment())
-            it.tvScreenName.setText(R.string.dictionary)
+            it.tvScreenName.setText(R.string.learn)
         }
     }
 
@@ -47,57 +47,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        val fragment: Fragment
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-        when (item.itemId) {
-            R.id.action_learn -> {
-                if (currentFragment is DictionaryFragment) return@OnNavigationItemSelectedListener false
-                binding.apply {
-                    addContentMenu.visibility = View.VISIBLE
-                    if (addContentMenu.isExpanded) addContentMenu.collapse()
-                    binding.tvScreenName.visibility = View.VISIBLE
-                    tvScreenName.setText(R.string.learn)
-                }
-                fragment = DictionaryFragment.newInstance()
-                loadFragment(fragment)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.action_note -> {
-                if (currentFragment is NoteFragment) return@OnNavigationItemSelectedListener false
-                binding.apply {
-                    addContentMenu.visibility = View.VISIBLE
-                    if (addContentMenu.isExpanded) addContentMenu.collapse()
-                    binding.tvScreenName.visibility = View.VISIBLE
-                    tvScreenName.setText(R.string.note)
-                }
-                fragment = NoteFragment.newInstance()
-                loadFragment(fragment)
-                return@OnNavigationItemSelectedListener true
-            }
-
-            R.id.action_account -> {
-                if (currentFragment is AccountFragment) return@OnNavigationItemSelectedListener false
-                binding.addContentMenu.visibility = View.GONE
-//                binding.tvScreenName.setText(R.string.account)
-                binding.tvScreenName.visibility = View.GONE
-                fragment = AccountFragment.newInstance()
-                loadFragment(fragment)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
-
-    private fun loadFragment(fragment: Fragment) {
-        // load fragment
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        transaction.replace(R.id.fragment_container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
     }
 
     companion object {

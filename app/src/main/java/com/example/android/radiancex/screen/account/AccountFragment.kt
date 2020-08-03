@@ -1,17 +1,17 @@
 package com.example.android.radiancex.screen.account
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.android.radiancex.LoginActivity
+import com.example.android.radiancex.R
 import com.example.android.radiancex.databinding.FragmentAccountBinding
-import com.example.android.radiancex.screen.browse.EntryRecyclerViewAdapter
 import com.google.firebase.auth.FirebaseAuth
-import java.lang.Exception
+
 
 class AccountFragment : Fragment() {
 
@@ -24,6 +24,12 @@ class AccountFragment : Fragment() {
         binding = FragmentAccountBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window? = this.activity?.window
+            window?.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window?.statusBarColor = ContextCompat.getColor(this.requireContext(), R.color.colorPrimary);
+        }
         fAuth = FirebaseAuth.getInstance()
 
         val mAdapter = AccountMenuRecyclerViewAdapter()

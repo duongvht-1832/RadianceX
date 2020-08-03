@@ -1,0 +1,23 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_learn">
+    <fragment
+        android:id="@+id/navigation_learn"
+        android:name="com.example.android.radiancex.DictionaryFragment"
+        android:label="@string/learn"
+        tools:layout="@layout/fragment_dictionary" />
+
+    <fragment
+        android:id="@+id/navigation_note"
+        android:name="com.example.android.radiancex.NoteFragment"
+        android:label="@string/note"
+        tools:layout="@layout/fragment_note"/>
+
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="com.example.android.radiancex.screen.account.AccountFragment"
+        android:label="@string/account"
+        tools:layout="@layout/fragment_account"/>
+</navigation>
